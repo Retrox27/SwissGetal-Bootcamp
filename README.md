@@ -1,0 +1,1 @@
+This theme is for the Meraki Bootcamp. Live page: https://bootcamp-luis1.myshopify.com/?_ab=0&_bt=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaUZpYjI5MFkyRnRjQzFzZFdsek1TNXRlWE5vYjNCcFpua3VZMjl0QmpvR1JWUT0iLCJleHAiOiIyMDI0LTAxLTA5VDE3OjU5OjMyLjIwMVoiLCJwdXIiOiJwZXJtYW5lbnRfcGFzc3dvcmRfYnlwYXNzIn19--63598e35077c46afb19a3c1859d55484cabd528d&_fd=0&_sc=1
