@@ -1,16 +1,1 @@
-{
-  "sections": {
-    "hero": {
-      "type": "hero-banner-art",
-      "settings": {}
-    },
-    "main": {
-      "type": "main-article",
-      "settings": {}
-    }
-  },
-  "order": [
-    "hero",
-    "main"
-  ]
-}
+{"sections":{"hero":{"type":"hero-banner-art","settings":{}},"main":{"type":"main-article","settings":{}}},"order":["hero","main"]}
