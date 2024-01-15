@@ -1,0 +1,173 @@
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign max_products = section.settings.product_rows_int | times: section.settings.products_per_row_int -%}
+
+<div class="spaced-section" data-section-type="featured-collection">
+  <div class="container section-content">
+    <div class="feature_button">
+      {% if section.settings.button %}
+        <span class="featured-collection-link">
+          <a class="feature-link" href="{{ collection.url }}">Shop All</a>
+        </span>
+      {% endif %}
+      {%- if section.settings.title != blank -%}
+        <h2
+          class="section-heading align-left {{ section.settings.heading_font }} feat-header"
+          data-cc-animate
+        >
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid--row-gutters product-list">
+      {%- unless section.settings.collection == blank -%}
+        {%- liquid
+          if settings.prod_card_image_ratio == 'shortest'
+            assign aspect_ratio = 0
+            for product in collection.products limit: max_products
+              if product.featured_media.preview_image.aspect_ratio > aspect_ratio
+                assign aspect_ratio = product.featured_media.preview_image.aspect_ratio
+              endif
+            endfor
+          elsif settings.prod_card_image_ratio == 'tallest'
+            assign aspect_ratio = 99
+            for product in collection.products limit: max_products
+              if product.featured_media.preview_image.aspect_ratio < aspect_ratio
+                assign aspect_ratio = product.featured_media.preview_image.aspect_ratio
+              endif
+            endfor
+          else
+            assign aspect_ratio = settings.prod_card_image_ratio
+          endif
+        -%}
+        {%- for product in collection.products limit: max_products -%}
+          {% render 'product-card',
+            product: product,
+            aspect_ratio: aspect_ratio,
+            grid_show_vendor: section.settings.grid_show_vendor,
+            items_per_row: section.settings.products_per_row_int,
+            animate: forloop.index
+          %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in (1..max_products) -%}
+          {% render 'onboarding-card',
+            aspect_ratio: aspect_ratio,
+            items_per_row: section.settings.products_per_row_int,
+            is_product: true
+          %}
+        {%- endfor -%}
+      {%- endunless -%}
+    </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div
+        class="section-footer align-center"
+        data-cc-animate
+        data-cc-animate-delay="0.2s"
+      ></div>
+      <a class="button button--alt" href="{{ collection.url }}">
+        {{- 'collections.general.view_all' | t -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured collection"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Custom Font",
+      "options": [
+        {
+          "value": "PlayFair",
+          "label": "PlayFair Display"
+        },
+        {
+          "value": "NanumMyeongjo",
+          "label": "NanumMyeongjo"
+        },
+        {
+          "value": "default",
+          "label": "Default"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Place a description"
+    },
+    {
+      "type": "text",
+      "id": "description-2",
+      "label": "Description",
+      "default": "Place a description"
+    },
+    {
+      "type": "text",
+      "id": "description-3",
+      "label": "Description",
+      "default": "Place a description"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "grid_show_vendor",
+      "label": "Show product vendor",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "products_per_row_int",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Products per row",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "product_rows_int",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Rows",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "<Show 'View all' link",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button",
+      "label": "Show Shop All button",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}
